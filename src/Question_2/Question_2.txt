@@ -1,0 +1,99 @@
+/*1.Write a SQL query to create the below tables:
+Field Name 	 Data Type 	  Size  	Decimal Places 	NULL
+agent_code 	   char 	    6 			No
+agent_name 	   char 	    25 	 		No
+working_area   char 	    25 	 		No
+*/
+
+create table agent(agent_code char(6) Not null ,agent_name char(25) not null ,
+working_area char(25));
+
+/*
+2.Write a SQL query to create a table to achieve UNIQUE constraints .
+Field Name 	Data Type 	Size 	Decimal Places 	    NULL 	Constraint
+ord_num 	decimal 	6 	 	                    No 	    UNIQUE
+ord_amount 	decimal 	12          	2       	Yes
+ord_date 	date 	 	 	                        No
+cust_code 	char 	    6                      	 	No
+agent_code 	char 	    6 	 	                    No
+*/
+
+ create table ord (ord_num decimal(6) not null unique, ord_amount decimal(12,2) ,
+ ord_date date not null , cust_code char(6) not null , agent_code char(6) not null );
+ /*4.Write SQLCreate Table to check UNIQUE values on more columns.
+
+Field Name 	Data   Type 	Size 	Decimal Places 	NULL 	Constraint
+cust_code 	char 	6 	 	No                          	UNIQUE
+cust_name 	char 	25 	 	No
+cust_city 	char 	25 	 	No
+grade 	   integer 	 	 	Yes
+agent_code 	char 	 6 	 	No 									UNIQUE
+*/
+create table customer (cust_code char(6) not null unique,
+cust_name char(25) not null, cust_city char(25) not null,
+grade int null,agent_code char (6) unique);
+
+/*5.SQL Create Table with Check constraint
+Field Name 	Data Type 	Size 	Decimal Places 	NULL 	Constraint
+agent_code 	char 	6 	 	No 	UNIQUE
+agent_name 	char 	25 	 	No 	UNIQUE
+working_area 	char 	25 	 	No
+commission 	integer 	 	 	 	CHECK <1
+*/
+
+alter table agent
+add commission integer check(commission<1);
+
+create table agent2 (agent_code char (6) unique not null, agent_name char(25) not null unique, working_area char(25) not null,
+commission int check(commission<1));
+
+/*6.	SQL Alter table with check constraint.
+Field Name	    Data Type	Size	Decimal Places	NULL	Constraint
+agent_code	     char	    6		                 No	    UNIQUE
+agent_name	     char     	25		                 No	    UNIQUE
+working_area     char       25	                     No
+commission	    integer				                         CHECK <1      */
+
+alter table agent
+add commission integer check(commission<1)
+
+alter table agent
+add constraint adding_check_agent_code unique (agent_code,agent_name);
+
+/*7.	SQL Create table with check constraint and In operator
+
+1.	The first one is on “working area” column which ensures that the working area
+should be either
+“London” or “brisban” or”Chennai” or “mumbai”.
+2.	The second one is on “commission” column which ensures that the commission must be
+ less than 1  */
+
+alter table agent
+add CONSTRAINT chk_working_area CHECK
+(working_area IN ('London', 'Brisbane', 'Chennai', 'Mumbai'))
+
+alter table agent
+add CONSTRAINT chk_commission CHECK (commission<1)
+
+/*  8.SQL create table using check constraint and AND, OR operator.
+
+To include a CHECK CONSTRAINT on 'commission' and 'working_area' column which ensures that - ission
+1. The 'commission' must be less than .14 and 'working_area' must be 'London',
+2. or the 'commission' must be less than .15 and 'working_area' must be 'Mumbai',
+3. or the 'commission' must be less than .13 and 'working_area' must be 'New York'
+at the time of creating the table which fields name and data types are-
+
+Field Name 	Data   Type 	Size 	Decimal Places 	NULL 	Constraint
+agent_code 	char 	         6 	                	No 	      UNIQUE
+agent_name 	char        	25 	                    No     	  UNIQUE
+working_area char       	25 	 	                Yes 	  CHECK
+commission 	decimal          8      	2 	        Yes 	  CHECK
+*/
+
+create table agent3(agent_code char(6) not null unique, agent_name char(25) not null unique,
+working_area char(25) ,commission decimal(8,2),
+constraint chk_agent_date check(
+(commission <0.14 and working_area='London') or
+(commission <0.15 and working_area='Mumbai') or
+(commission <0.14 and working_area='New York')));
+

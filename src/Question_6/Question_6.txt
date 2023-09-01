@@ -1,0 +1,55 @@
+create table Employee_details(
+EmployeeID int,
+FirstName char(20),
+LastName char(25),
+Salary decimal(9,2),
+Department char(10),
+Gender char(7));
+
+insert into Employee_details(EmployeeID ,FirstName,LastName,Salary,Department,Gender)
+values (1,'Vikas','Ahlawat',600000.00,'IT','Male'),
+(2,'nikitha','Jain',530000.00,'HR','Female'),
+(3,'Ashish','Kumar',1000000.00,'IT','Male'),
+(4,'Nikhil','Sharma',480000.00,'HR','Male'),
+(5,'anish','kadian',500000.00,'Payroll','Male');
+
+create table ProjectDetail(ProjectDetailID int ,Employee_ID int ,ProjectName varchar(30));
+
+insert into ProjectDetail(ProjectDetailID,Employee_ID,ProjectName)
+values (1,1,'Task Track'),
+(2,1,'CLP'),
+(3,1,'Survey Managment'),
+(4,2,'HR Managment'),
+(5,3,'Task Track'),
+(6,3,'GPS'),
+(7,3,'DDS'),
+(8,4,'HR Managment'),
+(9,6,'GL Managment');
+
+/*2.Get employee name, project name order by firstname from "EmployeeDetail" and "ProjectDetail"
+for those employee which have assigned project already.*/
+
+select ed.FirstName as EmployeeName,pd.ProjectName
+from Employee_details as ed
+inner join ProjectDetail as pd on ed.EmployeeID =pd.employee_ID
+order by ed.FirstName
+
+/*3.	Get employee name, project name order by firstname from "EmployeeDetail" and "ProjectDetail"
+for all employee even they have not assigned project.*/
+
+select ed.FirstName as EmployeeName,pd.ProjectName from Employee_details as ed
+left join ProjectDetail as pd on  ed.EmployeeID=pd.Employee_ID
+order by ed.FirstName
+
+/* 4.	Get all project name even they have not matching any employeeid, in left table, order by firstname
+from "EmployeeDetail" and "ProjectDetail".*/
+
+select ed.FirstName as EmployeeName,pd.ProjectName from Employee_details as ed
+full outer join ProjectDetail as pd on  ed.EmployeeID=pd.Employee_ID
+order by ed.FirstName
+
+/* 5.	Get complete record(employeename, project name) from both tables([EmployeeDetail],[ProjectDetail]),
+if no match found in any table then show NULL.*/
+
+select ed.FirstName as EmployeeName,pd.ProjectName from Employee_details as ed
+full outer join ProjectDetail as pd on  ed.EmployeeID=pd.Employee_ID

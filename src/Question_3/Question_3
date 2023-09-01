@@ -1,0 +1,69 @@
+/*
+SQL Select Statement Assessment
+1.Create a Salesman table with the following columns and make sure Salesman_id column should be auto increment.
+Salesman_id
+Name
+City
+Commission
+Notre : Salesman_id should start from 5001.
+*/
+create table salesman(salesman_id int identity(5001,1) primary key,name varchar(50),city varchar(50),commission decimal(10,2));
+/*
+
+Insert following records in salesman table:
+Salesman_id |Name |City| Commission
+5001 | James Hoog | New York | 0.15
+5002 | Nail Knite | Paris    |  0.13
+5005 | Pit Alex   | London   | 0.11
+5006 | Mc Lyon    | Paris    | 0.14
+5007 | Paul Adam  | Paris     | 0.13
+5003 | Lauson Hen | San Jose | 0.12
+*/
+
+SET IDENTITY_INSERT Salesman ON;
+insert into salesman(salesman_id, name, city, commission)
+values
+(5001,'James Hoog','New York',0.15),
+(5002,'Nail Knite','Paris',0.13),
+(5005,'Pit Alex','london',0.11),
+(5006,'Mc Lyon','Paris',0.14),
+(5007,'Paul Adam','Paris',0.13),
+(5003,'Lauson Hen','San Jose',0.12);
+
+/* 3. Write an SQL query to display all the information from the Salesman table */
+
+select * from salesman;
+
+/*4. Write an SQL query to display distinct city from the Salesman table.*/
+
+select distinct city from salesman;
+
+/*5. Write an SQL query to display all distinct rows from the Salesman table.*/
+
+select distinct * from salesman;
+
+/*6. Write an SQL query to display distinct name and city from Salesman table*/
+
+select distinct name, city  from salesman;
+
+/*7. Write an SQL query to display all records but city should be "Paris"*/
+
+select * from salesman
+where city <> 'Paris'
+
+/* Write an SQL query to display all records but city should be "Paris" and commission
+ should be greater than 0.14 */
+
+select * from salesman
+where city ='Paris' and commission>0.14;
+
+/* 9. Write an SQL query to display all records from Salesman table but commission
+column should be ascending order */
+
+select * from salesman
+group by commission ;
+
+/* 10.Write an SQL query to display all records except San Jose city */
+
+select * from salesman
+where city <> 'San Jose';
