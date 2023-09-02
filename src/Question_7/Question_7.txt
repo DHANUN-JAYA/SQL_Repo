@@ -1,0 +1,63 @@
+create table Employee(EmployeeID int ,Ename char(25),DeptID int ,Salary int)
+insert into Employee(EmployeeID ,Ename,DeptID ,Salary ) values
+(1001,'John',2,4000),
+(1002,'Anna',1,3500),
+(1003,'James',1,2500),
+(1004,'David',2,5000),
+(1005,'Mark',2,3000),
+(1006,'Steve',3,4500),
+(1007,'Alice',3,3500)
+
+/* 1. Write SQL query to group the DeptID column and Salary need to average salary
+ department-wise from above table.(Output columns: DeptID, Avg.Salary)*/
+
+select DeptID, avg(Salary) as avg_salary from Employee
+group by DeptID
+
+/* 2. In continuation to above apply Having condition on Average Salary > 3000
+and show the result.*/
+
+select DeptID, avg(Salary) as avg_salary from Employee
+group by DeptID having avg(Salary)>3000;
+
+create table Department(DeptID int, Dname char (25),Dlocation char(25))
+insert into Department (DeptID,Dname,Dlocation)
+values (1,'HR','Mumbai'),
+(2,'IT','New Delhi'),
+(3,'Finance','Mumbai')
+
+/* 1. Apply Join on Employee and Department tables using the common column DeptID */
+
+select * from Employee
+inner join Department on Employee.DeptID=Department.DeptID
+
+/* 2. Write SQL query to display Dname, Avg. salary of Each dept.
+ using Joins and Group by Clauses.*/
+
+select d.Dname, avg(e.Salary) from Employee as e
+inner join Department as d on e.DeptID=d.DeptID
+group by d.Dname
+
+/* 3. From above two tables
+From AdventureworksDB2019,
+Write SQL query to display FirstName and BirthDate and birthdate should be between
+ 01-01-1985 to 01-12-1985
+from DimCustomer and DimEmployee tables using Union and Union all functions.*/
+
+use AdventureWorksDW2019
+
+--
+
+select firstName,BirthDate from DimCustomer
+where BirthDate Between '1985-01-01' and '1985-12-01'
+union
+select firstName,BirthDate from DimEmployee
+where BirthDate Between '1985-01-01' and '1985-12-01';
+
+--union all
+
+select firstName,BirthDate from DimCustomer
+where BirthDate Between '1985-01-01' and '1985-12-01'
+union all
+select firstName,BirthDate from DimEmployee
+where BirthDate Between '1985-01-01' and '1985-12-01';
